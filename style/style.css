@@ -1,0 +1,303 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+/* Add this with your other font imports */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Moul&display=swap');
+
+/* Gallery styles */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.memory-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(255, 102, 179, 0.1);
+    transition: all 0.3s ease;
+}
+
+.memory-photo:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
+}
+
+/* Footer with Khmer font */
+footer p {
+    font-family: "Moul", serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+/* Heart Animation Background */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40" fill="%23ff66b3"/></svg>');
+    z-index: -1;
+    animation: heartFloat 15s linear infinite;
+}
+
+@keyframes heartFloat {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 102, 179, 0.3);
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #ff66b3;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.love-counter {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 40px 0;
+    gap: 15px;
+}
+
+.counter-box {
+    text-align: center;
+    padding: 25px 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(255, 102, 179, 0.15);
+    min-width: 120px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 1px solid rgba(255, 102, 179, 0.2);
+}
+
+.counter-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,102,179,0.1) 0%, rgba(255,178,217,0.2) 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.counter-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(255, 102, 179, 0.25);
+}
+
+.counter-box:hover::before {
+    opacity: 1;
+}
+
+.counter-box:hover .counter-value {
+    color: #ff3385;
+    transform: scale(1.1);
+}
+
+.counter-value {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #ff66b3;
+    margin-bottom: 5px;
+    transition: all 0.4s ease;
+    display: inline-block;
+}
+
+.counter-label {
+    color: #666;
+    font-size: 1rem;
+    transition: all 0.4s ease;
+}
+
+.counter-box:hover .counter-label {
+    color: #ff3385;
+    transform: scale(1.05);
+}
+
+.anniversary {
+    text-align: center;
+    margin: 30px 0;
+    padding: 25px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(255, 102, 179, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.anniversary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,102,179,0.05) 0%, rgba(255,255,255,0) 70%);
+    animation: pulse 8s infinite linear;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.anniversary p:first-child {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+#start-date {
+    font-size: 1.3rem;
+    color: #ff66b3;
+    font-weight: 600;
+}
+
+.memories {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.memories h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #ff66b3;
+    margin-bottom: 20px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.photo-placeholder {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #ffe6f2 0%, #ffcce6 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cc99b3;
+    font-style: italic;
+    box-shadow: 0 4px 10px rgba(255, 102, 179, 0.1);
+    transition: all 0.3s ease;
+}
+.photo-placeholder:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #666;
+    border-top: 1px solid rgba(255, 102, 179, 0.3);
+}
+
+/* Floating hearts animation */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff66b3"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+    opacity: 0;
+    animation: float 6s ease-in infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .love-counter {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .counter-box {
+        width: 80%;
+        margin: 10px 0;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+}
