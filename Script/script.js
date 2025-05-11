@@ -1,6 +1,6 @@
-// Set your anniversary date here (YYYY, MM-1, DD)
+
 // Note: Months are 0-indexed (0 = January, 11 = December)
-const anniversaryDate = new Date(2022, 11, 16); // January 1, 2023
+const anniversaryDate = new Date(2022, 11, 16); // December 16, 2022
 
 // Update the displayed start date
 document.getElementById('start-date').textContent = anniversaryDate.toLocaleDateString('en-US', {
@@ -63,39 +63,81 @@ setInterval(updateCounter, 1000);
 // Initial update
 updateCounter();
 
+// Night Mode Toggle
+const modeToggle = document.getElementById('mode-toggle');
+const modeIcon = document.getElementById('mode-icon');
+const modeText = document.getElementById('mode-text');
 
-// Floating hearts animation
-function createHearts() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    
-    // Random position
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.top = Math.random() * 100 + 'vh';
-    
-    // Random size
-    const size = Math.random() * 15 + 10;
-    heart.style.width = size + 'px';
-    heart.style.height = size + 'px';
-    
-    // Random animation duration
-    heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-    
-    // Random opacity
-    heart.style.opacity = Math.random() * 0.5 + 0.3;
-    
-    document.querySelector('.floating-hearts').appendChild(heart);
-    
-    // Remove heart after animation completes
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+// Check for saved theme preference or use preferred color scheme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.body.classList.add('dark-mode');
+    modeText.textContent = 'Light Mode';
+    updateModeIcon(true);
 }
 
-// Create hearts container
-const heartsContainer = document.createElement('div');
-heartsContainer.classList.add('floating-hearts');
-document.body.appendChild(heartsContainer);
+modeToggle.addEventListener('click', () => {
+    // Toggle dark-mode class on body
+    document.body.classList.toggle('dark-mode');
+    
+    // Update button text and icon
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    modeText.textContent = isDarkMode ? 'Light Mode' : 'Night Mode';
+    
+    // Save preference to localStorage
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    
+    // Update icon
+    updateModeIcon(isDarkMode);
+});
 
-// Generate hearts periodically
-setInterval(createHearts, 300);
+function updateModeIcon(isDarkMode) {
+    if (isDarkMode) {
+        modeIcon.innerHTML = '<path d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26 c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>';
+    } else {
+        modeIcon.innerHTML = '<path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1S11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path>';
+    }
+}
+// Floating hearts animation
+function createHearts() {
+    const heartsContainer = document.querySelector('.floating-hearts');
+    const heartCount = 20; // Number of hearts to maintain
+    
+    // Function to create a single heart with random properties
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        
+        // Random properties
+        const size = Math.random() * 15 + 10; // 10px to 25px
+        const left = Math.random() * 100; // 0% to 100% of viewport width
+        const startBottom = Math.random() * 100; // Start at random vertical positions
+        const duration = Math.random() * 5 + 5; // 5s to 10s
+        const delay = Math.random() * 5; // 0s to 5s delay
+        
+        heart.style.width = `${size}px`;
+        heart.style.height = `${size}px`;
+        heart.style.left = `${left}vw`;
+        heart.style.bottom = `${startBottom}vh`; // Start from random vertical position
+        heart.style.opacity = Math.random() * 0.5 + 0.1; // 0.1 to 0.6
+        heart.style.animationDuration = `${duration}s`;
+        heart.style.animationDelay = `${delay}s`;
+        
+        // Remove heart after animation completes
+        heart.addEventListener('animationend', function() {
+            heart.remove();
+            // Create a new heart to replace this one
+            setTimeout(createHeart, Math.random() * 3000); // Delay before creating new heart
+        });
+        
+        heartsContainer.appendChild(heart);
+    }
+    
+    // Create initial hearts
+    for (let i = 0; i < heartCount; i++) {
+        setTimeout(createHeart, i * 300); // Stagger creation
+    }
+}
+
+// Start the heart animation
+window.addEventListener('load', createHearts);

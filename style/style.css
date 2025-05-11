@@ -1,18 +1,81 @@
+/* Original CSS with additions */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --primary-color: #ff66b3;
+    --primary-dark: #ff3385;
+    --secondary-color: #666;
+    --bg-color: white;
+    --text-color: #333;
+    --shadow-color: rgba(255, 102, 179, 0.15);
+    --border-color: rgba(255, 102, 179, 0.3);
+    --heart-bg: rgba(255, 102, 179, 0.03);
+    --card-bg: white;
+}
+
+body.dark-mode {
+    --primary-color: #ff85c2;
+    --primary-dark: #ff99cc;
+    --secondary-color: #bbb;
+    --bg-color: #222;
+    --text-color: #f0f0f0;
+    --shadow-color: rgba(255, 102, 179, 0.25);
+    --border-color: rgba(255, 102, 179, 0.4);
+    --heart-bg: rgba(255, 102, 179, 0.05);
+    --card-bg: #333;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #333;
+    color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 /* Add this with your other font imports */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Moul&display=swap');
+
+/* Night Mode Toggle */
+.mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--card-bg);
+    padding: 8px 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.mode-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+.mode-toggle span {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.mode-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--primary-color);
+}
 
 /* Gallery styles */
 .gallery {
@@ -27,7 +90,7 @@ body {
     height: 200px;
     object-fit: cover;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(255, 102, 179, 0.1);
+    box-shadow: 0 4px 10px var(--shadow-color);
     transition: all 0.3s ease;
 }
 
@@ -42,6 +105,7 @@ footer p {
     font-size: 1.2rem;
     letter-spacing: 1px;
 }
+
 /* Heart Animation Background */
 body::before {
     content: "";
@@ -53,6 +117,7 @@ body::before {
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40" fill="%23ff66b3"/></svg>');
     z-index: -1;
     animation: heartFloat 15s linear infinite;
+    opacity: var(--heart-bg);
 }
 
 @keyframes heartFloat {
@@ -79,19 +144,19 @@ header {
     text-align: center;
     margin-bottom: 30px;
     padding: 20px 0;
-    border-bottom: 1px solid rgba(255, 102, 179, 0.3);
+    border-bottom: 1px solid var(--border-color);
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
     font-size: 3rem;
-    color: #ff66b3;
+    color: var(--primary-color);
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
-    color: #666;
+    color: var(--secondary-color);
     font-size: 1.2rem;
 }
 
@@ -106,15 +171,15 @@ h1 {
 .counter-box {
     text-align: center;
     padding: 25px 20px;
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(255, 102, 179, 0.15);
+    box-shadow: 0 6px 15px var(--shadow-color);
     min-width: 120px;
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
     z-index: 1;
-    border: 1px solid rgba(255, 102, 179, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .counter-box::before {
@@ -140,27 +205,27 @@ h1 {
 }
 
 .counter-box:hover .counter-value {
-    color: #ff3385;
+    color: var(--primary-dark);
     transform: scale(1.1);
 }
 
 .counter-value {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #ff66b3;
+    color: var(--primary-color);
     margin-bottom: 5px;
     transition: all 0.4s ease;
     display: inline-block;
 }
 
 .counter-label {
-    color: #666;
+    color: var(--secondary-color);
     font-size: 1rem;
     transition: all 0.4s ease;
 }
 
 .counter-box:hover .counter-label {
-    color: #ff3385;
+    color: var(--primary-dark);
     transform: scale(1.05);
 }
 
@@ -168,9 +233,9 @@ h1 {
     text-align: center;
     margin: 30px 0;
     padding: 25px;
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(255, 102, 179, 0.15);
+    box-shadow: 0 6px 15px var(--shadow-color);
     position: relative;
     overflow: hidden;
 }
@@ -197,13 +262,13 @@ h1 {
 }
 
 .anniversary p:first-child {
-    color: #666;
+    color: var(--secondary-color);
     margin-bottom: 5px;
 }
 
 #start-date {
     font-size: 1.3rem;
-    color: #ff66b3;
+    color: var(--primary-color);
     font-weight: 600;
 }
 
@@ -215,7 +280,7 @@ h1 {
 .memories h2 {
     font-family: 'Dancing Script', cursive;
     font-size: 2rem;
-    color: #ff66b3;
+    color: var(--primary-color);
     margin-bottom: 20px;
 }
 
@@ -236,20 +301,119 @@ h1 {
     justify-content: center;
     color: #cc99b3;
     font-style: italic;
-    box-shadow: 0 4px 10px rgba(255, 102, 179, 0.1);
+    box-shadow: 0 4px 10px var(--shadow-color);
     transition: all 0.3s ease;
 }
+
 .photo-placeholder:hover {
     transform: scale(1.03);
     box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
+}
+
+/* Social Media Section */
+.social-media {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.social-media h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+.profiles {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.profile-card {
+    width: 300px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(255, 102, 179, 0.25);
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 15px;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.profile-name {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.profile-bio {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-view {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.btn-view:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-follow {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-follow:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
 footer {
     text-align: center;
     margin-top: 40px;
     padding: 20px;
-    color: #666;
-    border-top: 1px solid rgba(255, 102, 179, 0.3);
+    color: var(--secondary-color);
+    border-top: 1px solid var(--border-color);
 }
 
 /* Floating hearts animation */
@@ -260,7 +424,7 @@ footer {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: -100;
 }
 
 .heart {
@@ -268,8 +432,10 @@ footer {
     width: 20px;
     height: 20px;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff66b3"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+    background-size: contain;
     opacity: 0;
     animation: float 6s ease-in infinite;
+    will-change: transform, opacity; /* Improves performance */
 }
 
 @keyframes float {
@@ -277,8 +443,8 @@ footer {
         transform: translateY(0) rotate(0deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.5;
+    20% {
+        opacity: 0.6;
     }
     100% {
         transform: translateY(-100vh) rotate(360deg);
@@ -299,5 +465,20 @@ footer {
     
     h1 {
         font-size: 2.2rem;
+    }
+    
+    .profiles {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-card {
+        width: 90%;
+    }
+    
+    .mode-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
     }
 }
