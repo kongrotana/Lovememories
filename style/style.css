@@ -594,3 +594,75 @@ footer p {
         height: 150px;
     }
 }
+
+/* Calendar Responsive Fixes */
+.calendar-container {
+    max-width: 95vw; /* Changed from fixed 500px */
+    margin: 0 auto;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(30px, 1fr)); /* Minimum cell size */
+    gap: 3px; /* Reduced gap */
+}
+
+.calendar-day-header {
+    font-size: 0.7rem; /* Smaller text for headers */
+    padding: 5px 2px;
+}
+
+.calendar-day {
+    padding: 6px 2px; /* Reduced padding */
+    font-size: 0.85rem; /* Adjusted font size */
+    min-height: 35px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Specific Fixes for Vivo S1 Pro's 19.5:9 Aspect Ratio */
+@media (max-width: 480px) and (min-aspect-ratio: 19/9) {
+    .calendar-container {
+        padding: 10px;
+    }
+    
+    .calendar-day {
+        font-size: 0.75rem;
+        min-height: 30px;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1rem;
+    }
+    
+    .calendar-header button {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 400px) {
+    .calendar-grid {
+        grid-template-columns: repeat(7, minmax(28px, 1fr));
+    }
+    
+    .calendar-day-header {
+        font-size: 0.6rem;
+    }
+    
+    .anniversary-tooltip {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        margin-bottom: 5px;
+    }
+}
+
+/* Touch Optimization */
+.calendar-day {
+    touch-action: manipulation; /* Removes touch delay on mobile */
+}
