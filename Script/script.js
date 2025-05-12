@@ -1,4 +1,3 @@
-
 // Note: Months are 0-indexed (0 = January, 11 = December)
 const anniversaryDate = new Date(2022, 11, 16); // December 16, 2022
 
@@ -98,6 +97,7 @@ function updateModeIcon(isDarkMode) {
         modeIcon.innerHTML = '<path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1S11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path>';
     }
 }
+
 // Floating hearts animation
 function createHearts() {
     const heartsContainer = document.querySelector('.floating-hearts');
@@ -139,5 +139,129 @@ function createHearts() {
     }
 }
 
-// Start the heart animation
-window.addEventListener('load', createHearts);
+// Calendar functionality
+const calendarGrid = document.getElementById('calendar-grid');
+const currentMonthYear = document.getElementById('current-month-year');
+const prevMonthBtn = document.getElementById('prev-month');
+const nextMonthBtn = document.getElementById('next-month');
+const anniversaryMessage = document.getElementById('anniversary-message');
+
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+
+// Check if today is anniversary and show message
+function checkAnniversary() {
+    const today = new Date();
+    if (today.getMonth() === anniversaryDate.getMonth() && today.getDate() === anniversaryDate.getDate()) {
+        anniversaryMessage.textContent = "Happy Anniversary Day! ❤️";
+        anniversaryMessage.style.display = 'block';
+        
+        // Add celebration effect
+        setTimeout(() => {
+            anniversaryMessage.style.transform = 'scale(1.1)';
+            anniversaryMessage.style.transition = 'transform 0.3s ease';
+        }, 100);
+        
+        setTimeout(() => {
+            anniversaryMessage.style.transform = 'scale(1)';
+        }, 400);
+        
+        // Create extra hearts for celebration
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+    } else {
+        anniversaryMessage.textContent = '';
+        anniversaryMessage.style.display = 'none';
+    }
+}
+
+// Initialize calendar
+function initCalendar() {
+    updateCalendar();
+    
+    prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        updateCalendar();
+    });
+    
+    nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        updateCalendar();
+    });
+}
+
+function updateCalendar() {
+    // Update month/year display
+    currentMonthYear.textContent = new Date(currentYear, currentMonth).toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric'
+    });
+    
+    // Clear previous calendar
+    calendarGrid.innerHTML = '';
+    
+    // Add day headers
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayNames.forEach(day => {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('calendar-day-header');
+        dayElement.textContent = day;
+        calendarGrid.appendChild(dayElement);
+    });
+    
+    // Get first day of month and total days in month
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    
+    // Add empty cells for days before first day of month
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.classList.add('calendar-day', 'empty');
+        calendarGrid.appendChild(emptyDay);
+    }
+    
+    // Add days of month
+    const today = new Date();
+    const isCurrentMonth = currentMonth === today.getMonth() && currentYear === today.getFullYear();
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('calendar-day');
+        dayElement.textContent = day;
+        
+        // Check if it's today
+        if (isCurrentMonth && day === today.getDate()) {
+            dayElement.classList.add('today');
+        }
+        
+        // Check if it's the 16th of any month
+        if (day === 16) {
+            dayElement.classList.add('anniversary-hover');
+            
+            // Create tooltip element
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('anniversary-tooltip');
+            tooltip.textContent = 'Our Anniversary';
+            dayElement.appendChild(tooltip);
+        }
+        
+        calendarGrid.appendChild(dayElement);
+    }
+}
+// Start everything when page loads
+window.addEventListener('load', () => {
+    createHearts();
+    initCalendar();
+    checkAnniversary();
+    updateCounter();
+});
