@@ -284,7 +284,7 @@ h1 {
 
 .calendar-header h3 {
     color: var(--primary-color);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 0;
 }
 
@@ -308,18 +308,18 @@ h1 {
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 3px;
 }
 
 .calendar-day-header {
     font-weight: 600;
     color: var(--primary-color);
-    padding: 5px;
-    font-size: 0.9rem;
+    padding: 4px;
+    font-size: 0.8rem;
 }
 
 .calendar-day {
-    padding: 8px;
+    padding: 5px;
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
