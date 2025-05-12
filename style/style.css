@@ -666,3 +666,33 @@ footer p {
 .calendar-day {
     touch-action: manipulation; /* Removes touch delay on mobile */
 }
+
+/* Add these styles to your CSS */
+.calendar-day {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover Effect */
+.calendar-day:hover:not(.empty) {
+    background-color: rgba(255, 102, 179, 0.15) !important;
+    transform: scale(1.1);
+}
+
+/* Click/Selected Effect */
+.calendar-day.selected {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    font-weight: 600;
+    box-shadow: 0 3px 8px rgba(255, 102, 179, 0.3);
+}
+
+/* Active/Pressed Effect */
+.calendar-day:active:not(.empty) {
+    transform: scale(0.95);
+}
+
+/* Update tooltip z-index */
+.anniversary-tooltip {
+    z-index: 20; /* Increased from 10 */
+}
