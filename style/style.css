@@ -1,10 +1,6 @@
-/* Original CSS with additions */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Moul&display=swap');
 
+/* Base Variables */
 :root {
     --primary-color: #ff66b3;
     --primary-dark: #ff3385;
@@ -15,8 +11,10 @@
     --border-color: rgba(255, 102, 179, 0.3);
     --heart-bg: rgba(255, 102, 179, 0.03);
     --card-bg: white;
+    --primary-color-hex: ff66b3;
 }
 
+/* Dark Mode Variables */
 body.dark-mode {
     --primary-color: #ff85c2;
     --primary-dark: #ff99cc;
@@ -27,6 +25,16 @@ body.dark-mode {
     --border-color: rgba(255, 102, 179, 0.4);
     --heart-bg: rgba(255, 102, 179, 0.05);
     --card-bg: #333;
+    --primary-color-hex: ff85c2;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 body {
@@ -34,79 +42,11 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
-    position: relative;
     background-color: var(--bg-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Add this with your other font imports */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Moul&display=swap');
-
-/* Night Mode Toggle */
-.mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    background-color: var(--card-bg);
-    padding: 8px 16px;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
-}
-
-.mode-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px var(--shadow-color);
-}
-
-.mode-toggle span {
-    margin-left: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.mode-icon {
-    width: 18px;
-    height: 18px;
-    fill: var(--primary-color);
-}
-
-/* Gallery styles */
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-}
-
-.memory-photo {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    transition: all 0.3s ease;
-}
-
-.memory-photo:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
-}
-
-/* Footer with Khmer font */
-footer p {
-    font-family: "Moul", serif;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-}
-
-/* Heart Animation Background */
+/* Heart Background Animation */
 body::before {
     content: "";
     position: fixed;
@@ -114,24 +54,19 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40" fill="%23ff66b3"/></svg>');
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M50,30a20,20 0 0 1 0,40 20,20 0 0 1 0-40" fill="%23${var(--primary-color-hex)}"/></svg>');
     z-index: -1;
     animation: heartFloat 15s linear infinite;
     opacity: var(--heart-bg);
 }
 
 @keyframes heartFloat {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
+/* Container & Header */
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -160,6 +95,7 @@ h1 {
     font-size: 1.2rem;
 }
 
+/* Love Counter */
 .love-counter {
     display: flex;
     justify-content: space-around;
@@ -176,10 +112,9 @@ h1 {
     box-shadow: 0 6px 15px var(--shadow-color);
     min-width: 120px;
     transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
-    z-index: 1;
-    border: 1px solid var(--border-color);
 }
 
 .counter-box::before {
@@ -204,17 +139,12 @@ h1 {
     opacity: 1;
 }
 
-.counter-box:hover .counter-value {
-    color: var(--primary-dark);
-    transform: scale(1.1);
-}
-
 .counter-value {
     font-size: 2.5rem;
     font-weight: 600;
     color: var(--primary-color);
     margin-bottom: 5px;
-    transition: all 0.4s ease;
+    transition: transform 0.4s ease;
     display: inline-block;
 }
 
@@ -224,11 +154,17 @@ h1 {
     transition: all 0.4s ease;
 }
 
+.counter-box:hover .counter-value {
+    color: var(--primary-dark);
+    transform: scale(1.1);
+}
+
 .counter-box:hover .counter-label {
     color: var(--primary-dark);
     transform: scale(1.05);
 }
 
+/* Anniversary Section */
 .anniversary {
     text-align: center;
     margin: 30px 0;
@@ -253,17 +189,8 @@ h1 {
 }
 
 @keyframes pulse {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.anniversary p:first-child {
-    color: var(--secondary-color);
-    margin-bottom: 5px;
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 #start-date {
@@ -272,6 +199,7 @@ h1 {
     font-weight: 600;
 }
 
+/* Memories Section */
 .memories {
     margin: 40px 0;
     text-align: center;
@@ -289,6 +217,20 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+}
+
+.memory-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.memory-photo:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
 }
 
 .photo-placeholder {
@@ -310,7 +252,7 @@ h1 {
     box-shadow: 0 8px 15px rgba(255, 102, 179, 0.2);
 }
 
-/* Add these to your style.css */
+/* Calendar Section */
 .calendar-section {
     margin: 40px 0;
     text-align: center;
@@ -381,10 +323,7 @@ h1 {
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
-}
-
-.calendar-day:hover {
-    background-color: rgba(255, 102, 179, 0.1);
+    touch-action: manipulation;
 }
 
 .calendar-day.empty {
@@ -393,67 +332,11 @@ h1 {
 
 .calendar-day.today {
     background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
+    color: white !important;
 }
 
-.calendar-day.anniversary {
-    position: relative;
-}
-
-.calendar-day.anniversary::after {
-    content: '❤️';
-    position: absolute;
-    bottom: -2px;
-    right: 2px;
-    font-size: 0.7rem;
-}
-
-
-/* Add these to your CSS */
-.calendar-day.anniversary {
-    position: relative;
-    cursor: pointer;
-}
-
-.calendar-day.anniversary::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: rgba(255, 102, 179, 0.2);
-    z-index: -1;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.calendar-day.anniversary:hover::before {
-    opacity: 1;
-    width: 36px;
-    height: 36px;
-}
-
-.calendar-day.anniversary:hover::after {
-    content: 'Anniversary';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--primary-color);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    margin-bottom: 5px;
-}
-
-/* Anniversary hover effect */
-.anniversary-hover {
+/* Anniversary Tooltip */
+.calendar-day.anniversary-hover {
     position: relative;
     cursor: pointer;
 }
@@ -465,14 +348,16 @@ h1 {
     transform: translateX(-50%);
     background-color: var(--primary-color);
     color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 6px;
     font-size: 0.8rem;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    z-index: 10;
+    will-change: transform, opacity;
 }
 
 .anniversary-tooltip::after {
@@ -481,30 +366,15 @@ h1 {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 5px;
+    border-width: 6px;
     border-style: solid;
     border-color: var(--primary-color) transparent transparent transparent;
 }
 
-.anniversary-hover:hover .anniversary-tooltip {
+.calendar-day.anniversary-hover:hover .anniversary-tooltip {
     opacity: 1;
     visibility: visible;
-}
-/* Remove any existing anniversary heart styles if they exist */
-.anniversary-heart {
-    display: none;
-}
-#anniversary-message {
-    margin-top: 15px;
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    font-weight: 600;
-    height: 24px;
-}
-
-/* Remove the previous anniversary marker */
-.calendar-day.anniversary::after {
-    content: none;
+    transform: translateX(-50%) translateY(-5px);
 }
 
 /* Social Media Section */
@@ -605,6 +475,7 @@ h1 {
     transform: translateY(-2px);
 }
 
+/* Footer */
 footer {
     text-align: center;
     margin-top: 40px;
@@ -613,7 +484,48 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
-/* Floating hearts animation */
+footer p {
+    font-family: "Moul", serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+/* Night Mode Toggle */
+.mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--card-bg);
+    padding: 8px 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.mode-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+.mode-toggle span {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.mode-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--primary-color);
+}
+
+/* Floating Hearts */
 .floating-hearts {
     position: fixed;
     top: 0;
@@ -621,34 +533,27 @@ footer {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -100;
+    z-index: -1;
 }
 
 .heart {
     position: absolute;
     width: 20px;
     height: 20px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff66b3"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
-    background-size: contain;
+    background-color: var(--primary-color);
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+    mask-size: contain;
     opacity: 0;
     animation: float 6s ease-in infinite;
-    will-change: transform, opacity; /* Improves performance */
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.6;
-    }
-    100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-    }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
     .love-counter {
         flex-direction: column;
@@ -664,6 +569,10 @@ footer {
         font-size: 2.2rem;
     }
     
+    .calendar-container {
+        max-width: 95%;
+    }
+    
     .profiles {
         flex-direction: column;
         align-items: center;
@@ -677,5 +586,11 @@ footer {
         top: 10px;
         right: 10px;
         padding: 6px 12px;
+    }
+    
+    .memory-photo,
+    .photo-placeholder {
+        width: 150px;
+        height: 150px;
     }
 }
