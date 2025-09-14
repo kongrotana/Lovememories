@@ -36,10 +36,14 @@ function updateCounter() {
     const minutes = totalMinutes % 60;
     const hours = totalHours % 24;
 
+    // Calculate the total number of days
+    const totalDays = Math.floor((now - anniversaryDate) / (1000 * 60 * 60 * 24));
+
     // Update the display
     document.getElementById('years').textContent = years;
     document.getElementById('months').textContent = months;
     document.getElementById('days').textContent = days;
+    document.getElementById('total-days').textContent = totalDays;
     document.getElementById('hours').textContent = hours;
     document.getElementById('minutes').textContent = minutes;
     document.getElementById('seconds').textContent = seconds;
