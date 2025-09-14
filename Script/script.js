@@ -10,52 +10,40 @@ document.getElementById('start-date').textContent = anniversaryDate.toLocaleDate
 
 function updateCounter() {
     const now = new Date();
-    const diff = now - anniversaryDate; // Difference in milliseconds
-    
-    // Calculate time difference
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    
-    // Calculate years and remaining days
-    const anniversaryThisYear = new Date(now.getFullYear(), anniversaryDate.getMonth(), anniversaryDate.getDate());
     let years = now.getFullYear() - anniversaryDate.getFullYear();
-    let remainingDays = Math.floor((now - anniversaryThisYear) / (1000 * 60 * 60 * 24));
-    
-    if (remainingDays < 0) {
+    let months = now.getMonth() - anniversaryDate.getMonth();
+    let days = now.getDate() - anniversaryDate.getDate();
+
+    // Adjust for negative months or days
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days = prevMonth.getDate() + days;
+    }
+
+    if (months < 0) {
         years--;
-        const lastYearAnniversary = new Date(now.getFullYear() - 1, anniversaryDate.getMonth(), anniversaryDate.getDate());
-        remainingDays = Math.floor((now - lastYearAnniversary) / (1000 * 60 * 60 * 24));
+        months = 12 + months;
     }
     
-    // Calculate months and remaining days after full years
-    let months = years * 12;
-    let tempDate = new Date(anniversaryDate);
-    tempDate.setFullYear(tempDate.getFullYear() + years);
-    
-    while (tempDate < now) {
-        tempDate.setMonth(tempDate.getMonth() + 1);
-        if (tempDate <= now) {
-            months++;
-        } else {
-            tempDate.setMonth(tempDate.getMonth() - 1);
-            break;
-        }
-    }
-    
-    // Calculate remaining days after full months
-    remainingDays = Math.floor((now - tempDate) / (1000 * 60 * 60 * 24));
-    
+    // Now calculate total seconds, minutes, and hours
+    const totalSeconds = Math.floor((now - anniversaryDate) / 1000);
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const totalHours = Math.floor(totalMinutes / 60);
+
+    // Get the remaining seconds, minutes, and hours
+    const seconds = totalSeconds % 60;
+    const minutes = totalMinutes % 60;
+    const hours = totalHours % 24;
+
     // Update the display
     document.getElementById('years').textContent = years;
     document.getElementById('months').textContent = months;
     document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours % 24;
-    document.getElementById('minutes').textContent = minutes % 60;
-    document.getElementById('seconds').textContent = seconds % 60;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
 }
-
 // Update the counter every second
 setInterval(updateCounter, 1000);
 
